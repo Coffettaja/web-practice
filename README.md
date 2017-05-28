@@ -1,2 +1,2 @@
-# web-practice
-Web application development practice
+# Web practice
+Practicing HTML5, JavaScript, jQuery, CSS etc. 
