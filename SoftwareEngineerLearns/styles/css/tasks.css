@@ -52,8 +52,8 @@ td {
   line-height: 25px;
   padding-left: 10px; }
 
-.even {
-  background: #e0e0e0; }
+tr:nth-child(2n) td {
+  background-color: #e0e0e0; }
 
 nav {
   margin: 15px 0 10px 0; }
