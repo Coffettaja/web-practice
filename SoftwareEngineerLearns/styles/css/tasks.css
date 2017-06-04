@@ -93,7 +93,7 @@ select {
 .not {
   display: none; }
 
-.rowHightlight {
+.rowHighlight {
   font-weight: bold; }
 
 label.error {
