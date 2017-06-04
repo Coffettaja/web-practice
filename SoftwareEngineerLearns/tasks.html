@@ -5,6 +5,7 @@
 	<title>Task list</title>
 	<link rel="stylesheet" href="styles/css/tasks.css" media="screen">
 	<script src="../dependencies/jquery.min.js"></script>
+	<script src="../dependencies/underscore.js"></script>
 </head>
 <body>
 	<header>
@@ -30,7 +31,7 @@
 					</select>
 				</div>
 				<nav>
-					<a href="#">Save task</a>
+					<a href="#" id="saveTask">Save task</a>
 					<a href="#">Clear task</a>
 				</nav>
 			</form>
@@ -115,6 +116,53 @@ $(document).ready(function() {
 		evt.preventDefault();
 		$(evt.target).parents('tr').remove();
 	});
+
+
+
+
 });
+
+(function($) {
+	$.fn.extend({
+
+		// Creates an object from the form fields, with attributes field.name: field.value
+		toObject: function() {
+			let result = {};
+
+			// Important to use []-notation instead of the .-notation,
+			// since names of the fields can be whatever
+			this.serializeArray().forEach(obj => result[obj.name] = obj.value);
+			return result;
+		},
+
+		// Exctracts the forms fields from the obj, takes the name-attribute
+		// of these fields, and if the obj has a property with that name,
+		// sets the value of the field from the value of the property
+		fromObject: function(obj) {
+			this.find(':input').toArray().forEach(input => {
+				let name = $(input).attr('name');
+				if (obj[name]) {
+					$(input).val(obj[name]);
+				} else {
+					$(input).val("");
+				}
+			});
+		}		
+	});
+})(jQuery);
+</script>
+<script id="taskRow">
+	<tr>
+		<td><%= task %></td>
+		<td><time datetime="<%= requiredBy %>"><%= requiredBy	%></time></td>
+		<td><%= category %></td>
+		<td>
+			<nav>
+				<a href="#">Edit</a>
+				<a href="#">Complete</a>
+				<a href="#" class="deleteRow">Delete</a>
+			</nav>
+		</td>
+	</tr>
 </script>
 </html>
