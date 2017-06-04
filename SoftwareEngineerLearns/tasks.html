@@ -53,42 +53,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Return library books</td>
-						<td><time datetime="2017-05-28">2017-05-28</time></td>
-						<td>Personal</td>
-						<td>
-							<nav>
-								<a href="#" class="editRow">Edit</a>
-								<a href="#" class="completeRow">Complete</a>
-								<a href="#" class="deleteRow">Delete</a>
-							</nav>
-						</td>
-					</tr>
-					<tr class="even">
-						<td>Perform stuff</td>
-						<td><time datetime="2017-05-28">2017-05-28</time></td>
-						<td>Work</td>
-						<td>
-							<nav>
-								<a href="#" class="editRow">Edit</a>
-								<a href="#" class="completeRow">Complete</a>
-								<a href="#" class="deleteRow">Delete</a>
-							</nav>
-						</td>
-					</tr>
-					<tr>
-						<td>Meet friends</td>
-						<td><time datetime="2017-05-28">2017-05-28</time></td>
-						<td>Personal</td>
-						<td>
-							<nav>
-								<a href="#" class="editRow">Edit</a>
-								<a href="#" class="completeRow">Complete</a>
-								<a href="#" class="deleteRow">Delete</a>
-							</nav>
-						</td>
-					</tr>
+						<!-- table with script -->
 				</tbody>
 			</table>
 			<nav>
@@ -108,8 +73,15 @@ $(document).ready(function() {
 	$('#btnAddTask').click(evt => { evt.preventDefault();
 												$('#taskCreation').removeClass('not');
 												});
-	$('tbody tr').click(evt => {
-			$(evt.target).closest('td').siblings().addBack().toggleClass('rowHighlight');
+
+	// $('tbody tr').click(evt => {
+	// 		console.log("Testi");
+	// 		$(evt.target).closest('td').siblings().addBack().toggleClass('rowHighlight');
+	// });
+	
+	// Highlights the row when clicked
+	$('#tblTasks tbody').on('click', '.taskRow', evt => {
+		$(evt.target).closest('td').siblings().addBack().toggleClass('rowHighlight');
 	});
 
 	$('#tblTasks tbody').on('click', '.deleteRow', evt => {
@@ -131,8 +103,8 @@ $(document).ready(function() {
 	$('#saveTask').click(evt => {
 		evt.preventDefault();
 		let task = $('form').toObject();
-		let template = $('#taskRow').html();
-		$('#tblTasks tbody').append(_.template(template)(task));
+		let rowTemplate = $('#addRow').html();
+		$('#tblTasks tbody').append(_.template(rowTemplate)(task));
 	});
 });
 
@@ -167,8 +139,8 @@ $(document).ready(function() {
 })(jQuery);
 </script>
 
-<script type="text/template" id="taskRow">
-<tr>
+<script type="text/template" id="addRow">
+<tr class='taskRow'>
 	<td><%= rc.task %></td>
 	<td><time datetime='<%= rc.requiredBy %>'><%= rc.requiredBy	%></time></td>
 	<td><%= rc.category %></td>
