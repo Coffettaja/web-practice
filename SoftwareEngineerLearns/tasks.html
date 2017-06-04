@@ -117,11 +117,26 @@ $(document).ready(function() {
 		$(evt.target).parents('tr').remove();
 	});
 
+	// "When rending an underscore template, we want top-level
+  // variables to be referenced as part of an object. For
+  // technical reasons (scope-chain search), this speeds up
+  // rendering; however, more importantly, this also allows our
+  // templates to look / feel more like our server-side
+  // templates that use the rc (Request Context / Colletion) in
+  // order to render their markup."
+	 _.templateSettings.variable = "rc";
 
-
-
+	// Save task button appends a new row to the table with the task info
+	// with the help of an _ template
+	$('#saveTask').click(evt => {
+		evt.preventDefault();
+		let task = $('form').toObject();
+		let template = $('#taskRow').html();
+		$('#tblTasks tbody').append(_.template(template)(task));
+	});
 });
 
+// Extends the jQuery with functions to get and set object to and from form fields
 (function($) {
 	$.fn.extend({
 
@@ -151,18 +166,19 @@ $(document).ready(function() {
 	});
 })(jQuery);
 </script>
-<script id="taskRow">
-	<tr>
-		<td><%= task %></td>
-		<td><time datetime="<%= requiredBy %>"><%= requiredBy	%></time></td>
-		<td><%= category %></td>
-		<td>
-			<nav>
-				<a href="#">Edit</a>
-				<a href="#">Complete</a>
-				<a href="#" class="deleteRow">Delete</a>
-			</nav>
-		</td>
-	</tr>
+
+<script type="text/template" id="taskRow">
+<tr>
+	<td><%= rc.task %></td>
+	<td><time datetime='<%= rc.requiredBy %>'><%= rc.requiredBy	%></time></td>
+	<td><%= rc.category %></td>
+	<td>
+		<nav>
+			<a href='#'>Edit</a>
+			<a href='#'>Complete</a>
+			<a href='#' class='deleteRow'>Delete</a>
+		</nav>
+	</td>
+</tr>
 </script>
 </html>
