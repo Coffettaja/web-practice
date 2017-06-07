@@ -4,16 +4,18 @@
 	<meta charset="UTF-8">
 	<title>Task list</title>
 	<link rel="stylesheet" href="styles/css/tasks.css" media="screen">
-	<script src="../dependencies/jquery.min.js"></script>
-	<script src="../dependencies/underscore.js"></script>
+	<script src="dependencies/jquery.min.js"></script>
+	<script src="dependencies/underscore.js"></script>
+	<script src="scripts/jquery-serialization.js"></script>
+	<script src="scripts/tasks-controller.js"></script>
 </head>
 <body>
 	<header>
 		<span>Task list</span>
 	</header>
-	<main>
+	<main id="taskPage">
 		<section id="taskCreation" class="not">
-			<form action="">
+			<form action="" id="taskForm">
 				<div>
 					<label for="">Task</label><input type="text"
 					required="required" name="task" class="large"
@@ -32,7 +34,7 @@
 				</div>
 				<nav>
 					<a href="#" id="saveTask">Save task</a>
-					<a href="#">Clear task</a>
+					<a href="#" id="clearTask">Clear task</a>
 				</nav>
 			</form>
 		</section>
@@ -65,47 +67,7 @@
 </body>
 <script>
 $(document).ready(function() {
-	$('[required]')
-		.prev('label')
-		.append('<span>*</span>')
-		.children('span')
-		.addClass('required');
-	$('#btnAddTask').click(evt => { evt.preventDefault();
-												$('#taskCreation').removeClass('not');
-												});
-
-	// $('tbody tr').click(evt => {
-	// 		console.log("Testi");
-	// 		$(evt.target).closest('td').siblings().addBack().toggleClass('rowHighlight');
-	// });
-	
-	// Highlights the row when clicked
-	$('#tblTasks tbody').on('click', '.taskRow', evt => {
-		$(evt.target).closest('td').siblings().addBack().toggleClass('rowHighlight');
-	});
-
-	$('#tblTasks tbody').on('click', '.deleteRow', evt => {
-		evt.preventDefault();
-		$(evt.target).parents('tr').remove();
-	});
-
-	// "When rending an underscore template, we want top-level
-  // variables to be referenced as part of an object. For
-  // technical reasons (scope-chain search), this speeds up
-  // rendering; however, more importantly, this also allows our
-  // templates to look / feel more like our server-side
-  // templates that use the rc (Request Context / Colletion) in
-  // order to render their markup."
-	 _.templateSettings.variable = "rc";
-
-	// Save task button appends a new row to the table with the task info
-	// with the help of an _ template
-	$('#saveTask').click(evt => {
-		evt.preventDefault();
-		let task = $('form').toObject();
-		let rowTemplate = $('#addRow').html();
-		$('#tblTasks tbody').append(_.template(rowTemplate)(task));
-	});
+	tasksController.init($('#taskPage'));
 });
 
 // Extends the jQuery with functions to get and set object to and from form fields
