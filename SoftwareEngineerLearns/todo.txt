@@ -1,5 +1,4 @@
 * Gradient colors to top
 * Test flexbox and CSS3 grid
 * Improve row highlighting
-
-! External template files, require.js?
+* External template files, require.js?

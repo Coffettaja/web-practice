@@ -59,7 +59,7 @@ tasksController = function() {
 						.click(evt => {
 								evt.preventDefault();
 								let task = $(taskPage).find('form').toObject();
-								let rowTemplate = $(taskPage).find('#addRow').html(); // TODO Get right template
+								let rowTemplate = $('#addRow').html(); 
 								$(taskPage).find('#tblTasks tbody')
 										.append(_.template(rowTemplate)(task));
 							});
