@@ -5,6 +5,7 @@
 	<title>Task list</title>
 	<link rel="stylesheet" href="styles/css/tasks.css" media="screen">
 	<script src="dependencies/jquery.min.js"></script>
+	<script src="dependencies/jquery.validate.js"></script>
 	<script src="dependencies/underscore.js"></script>
 	<script src="scripts/jquery-serialization.js"></script>
 	<script src="scripts/tasks-controller.js"></script>
@@ -17,9 +18,9 @@
 		<section id="taskCreation" class="not">
 			<form action="" id="taskForm">
 				<div>
-					<label for="">Task</label><input type="text"
-					required name="task" class="large"
-					placeholder="Breakfast at Tiffanys" autofocus>
+					<label for="">Task</label>
+					<input type="text" name="task" class="large" maxlength="200" 
+					placeholder="Breakfast at Tiffanys" autofocus required>
 				</div>
 				<div>
 					<label for="">Required by</label>

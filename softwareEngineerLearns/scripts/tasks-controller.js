@@ -58,10 +58,13 @@ tasksController = function() {
 						.find('#saveTask')
 						.click(evt => {
 								evt.preventDefault();
-								let task = $(taskPage).find('form').toObject();
-								let rowTemplate = $('#addRow').html(); 
-								$(taskPage).find('#tblTasks tbody')
-										.append(_.template(rowTemplate)(task));
+								if ($(taskPage).find('form').valid()) {
+									console.log("Inside IF");
+									let task = $(taskPage).find('form').toObject();
+									let rowTemplate = $('#addRow').html(); 
+									$(taskPage).find('#tblTasks tbody')
+											.append(_.template(rowTemplate)(task)); 
+								}
 							});
 			
 			initialized = true;
