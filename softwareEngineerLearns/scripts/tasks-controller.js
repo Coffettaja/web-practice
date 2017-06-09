@@ -59,7 +59,6 @@ tasksController = function() {
 						.click(evt => {
 								evt.preventDefault();
 								if ($(taskPage).find('form').valid()) {
-									console.log("Inside IF");
 									let task = $(taskPage).find('form').toObject();
 									let rowTemplate = $('#addRow').html(); 
 									$(taskPage).find('#tblTasks tbody')
