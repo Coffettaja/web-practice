@@ -79,7 +79,17 @@ window.tasksController = function() {
 			
 			initialized = true;
 			}
-		} // init end
+		}, // init end
+
+		loadTasks: function() {
+			storageEngine.findAll('task', function(tasks) {
+				$.each(tasks, (index, task) => {
+					let rowTemplate = $('#addRow').html(); 
+					$(taskPage).find('#tblTasks tbody')
+								.append(_.template(rowTemplate)(task));
+				});
+			}, errorLogger)
+		}
 	} 
 }(); 	/* Note the last parenthesis! Instantly executed, 
 			 therefore tasksController is the return value, not the function.

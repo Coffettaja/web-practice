@@ -1,7 +1,13 @@
 "use strict";
 window.storageEngine = function() {
-	var initialized = false;
-	var initializedObjectStores = {};
+	let initialized = false;
+	let initializedObjectStores = {};
+
+	function getStorageObject(type) {
+		let item = localStorage.getItem(type);
+		let parsedItem = JSON.parse(item);
+		return parsedItem;
+	}
 
 	return {
 		/**
@@ -65,12 +71,10 @@ window.storageEngine = function() {
 				obj.id = $.now(); // Not really a safe way to create an id ...
 			}
 
-			let savedTypeString = localStorage.getItem(type); // guaranteed to exist because earlier check
-			let storageItem = JSON.parse(savedTypeString);
+			let storageItem = getStorageObject(type);
 			storageItem[obj.id] = obj;
 			localStorage.setItem(type, JSON.stringify(storageItem));
 			successCallback(obj);
-			console.log("AAAAAAAAAAAAAAAA")
 		},
 
 		/**
@@ -80,7 +84,17 @@ window.storageEngine = function() {
 		 * @param  {Function} errorCallback   	The callback that is invoked in error scenarios.
 		 */
 		findAll: function(type, successCallback, errorCallback) {
+				if (!initialized) {
+					errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
+				}
+				else if (!initializedObjectStores[type]) {
+					errorCallback("store_not_initialized", "The object store " + type + " has not been initialized.");
+				}
 
+				let result = []; // initialized so that at least empty array is returned everytime
+				let storageItem = getStorageObject(type);
+				$.each(storageItem, (i, v) => result.push(v));
+				successCallback(result);
 		},
 
 		/**
