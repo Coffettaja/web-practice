@@ -2,3 +2,4 @@
 * Test flexbox and CSS3 grid
 * Improve row highlighting
 * External template files, require.js?
+* Safer id than just time in milliseconds

@@ -1,4 +1,5 @@
-storageEngine = function() {
+"use strict";
+window.storageEngine = function() {
 	var initialized = false;
 	var initializedObjectStores = {};
 
@@ -7,7 +8,7 @@ storageEngine = function() {
 		 * This must be called to initialize the storage engine before using it.
 		 * If initialization is succesful, successCallback will be invoked with null object.
 		 * If errorCallback is invoked then the storage engine cannot be used.
-		 * @param  {Function} successCallback The callback that will be invoked if succesful
+		 * @param  {Function} successCallback The callback that will be invoked with null if succesful
 		 * @param  {Function} errorCallback   The callback invoked in error scenarios
 		 */
 		init: function(successCallback, errorCallback) {
@@ -49,11 +50,27 @@ storageEngine = function() {
 		 * @param  {String} type            The type of object that is stored.
 		 * @param  {Object} obj             The object that is stored.
 		 * @param  {Function} successCallback The callback that is invoked after the object has been
-		 *                                    	committed to the storage engine.
+		 *                                    	committed to the storage engine, object as parameter.
 		 * @param  {Function} errorCallback   The callback that is invoked in error scenarios.
 		 */
 		save: function(type, obj, successCallback, errorCallback) {
+			if (!initialized) {
+				errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
+			} 
+			else if (!initializedObjectStores[type]) {
+				errorCallback("store_not_initialized", "The object store " + type + " has not been initialized.");
+			}
 
+			if (!obj.id) {
+				obj.id = $.now(); // Not really a safe way to create an id ...
+			}
+
+			let savedTypeString = localStorage.getItem(type); // guaranteed to exist because earlier check
+			let storageItem = JSON.parse(savedTypeString);
+			storageItem[obj.id] = obj;
+			localStorage.setItem(type, JSON.stringify(storageItem));
+			successCallback(obj);
+			console.log("AAAAAAAAAAAAAAAA")
 		},
 
 		/**

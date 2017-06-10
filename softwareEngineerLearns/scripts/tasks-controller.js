@@ -1,4 +1,5 @@
-tasksController = function() {
+"use strict";
+window.tasksController = function() {
 	let taskPage;
 	let initialized = false;
 
@@ -14,6 +15,13 @@ tasksController = function() {
 	return {
 		// Any initialization tasks that need to occur when tasks.html loads
 		init: function(page) {
+			storageEngine.init(function() {
+				// Called here to make sure that storageEngine has already been initialized.
+				storageEngine.initObjectStore('task', function() {
+					//
+				}, errorLogger);
+			}, errorLogger);
+
 			if (!initialized) {
 				taskPage = page;  // This is kind of private
 
@@ -60,16 +68,23 @@ tasksController = function() {
 								evt.preventDefault();
 								if ($(taskPage).find('form').valid()) {
 									let task = $(taskPage).find('form').toObject();
-									let rowTemplate = $('#addRow').html(); 
-									$(taskPage).find('#tblTasks tbody')
-											.append(_.template(rowTemplate)(task)); 
+									storageEngine.save('task', task, 
+										function(savedTask) { // Guarantees that table is not updated unless safe succesful
+											let rowTemplate = $('#addRow').html(); 
+											$(taskPage).find('#tblTasks tbody')
+													.append(_.template(rowTemplate)(task)); 
+									}, errorLogger);
 								}
 							});
 			
 			initialized = true;
 			}
-		}
+		} // init end
 	} 
 }(); 	/* Note the last parenthesis! Instantly executed, 
 			 therefore tasksController is the return value, not the function.
 			 This way no other code can construct another tasksController */
+
+function errorLogger(errorCode, errorMessage) {
+			console.log(errorCode + ": " + errorMessage);
+}
