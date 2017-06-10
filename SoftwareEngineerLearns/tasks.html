@@ -69,21 +69,21 @@
 </body>
 <script>
 $(document).ready(function() {
-	tasksController.init($('#taskPage'));
+	tasksController.init($("#taskPage"));
 	tasksController.loadTasks();
 });
 </script>
 
 <script type="text/template" id="addRow">
-<tr class='taskRow'>
+<tr class="taskRow">
 	<td><%= rc.task %></td>
-	<td><time datetime='<%= rc.requiredBy %>'><%= rc.requiredBy	%></time></td>
+	<td><time datetime="<%= rc.requiredBy %>"><%= rc.requiredBy	%></time></td>
 	<td><%= rc.category %></td>
 	<td>
 		<nav>
-			<a href='#'>Edit</a>
-			<a href='#'>Complete</a>
-			<a href='#' class='deleteRow'>Delete</a>
+			<a href="#">Edit</a>
+			<a href="#">Complete</a>
+			<a href="#" class="deleteRow" data-task-id="<%= rc.id %>">Delete</a>
 		</nav>
 	</td>
 </tr>

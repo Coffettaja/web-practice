@@ -55,9 +55,10 @@ window.tasksController = function() {
 				// Delete a row upon delete button click
 				$(taskPage)
 						.find('#tblTasks tbody')
-						.on('click', '.deleteRow', evt => {
-								evt.preventDefault();
-								$(evt.target).parents('tr').remove();
+						.on('click', '.deleteRow', function(evt) {
+								storageEngine.delete('task', $(evt.target).data().taskId, function() {
+									$(evt.target).parents('tr').remove();
+								}, errorLogger);
 							});
 
 				// Save task button appends a new row to the table with the task info

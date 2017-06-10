@@ -105,7 +105,21 @@ window.storageEngine = function() {
 		 * @param  {Function} errorCallback   	The callback invoked in error scenarios.
 		 */
 		delete: function(type, id, successCallback, errorCallback) {
-
+			if (!initialized) {
+				errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
+			}
+			else if (!initializedObjectStores[type]) {
+				errorCallback("store_not_initialized", "The object store " + type + " has not been initialized.");
+			}
+			let storageItem = getStorageObject(type);
+			if (storageItem[id]) {
+				delete storageItem[id];
+				localStorage.setItem(type, JSON.stringify(storageItem));
+				successCallback(id);
+			}
+			else {
+				errorCallback("object_not_found", "The requested object could not be found.");
+			}
 		},
 
 		/**
