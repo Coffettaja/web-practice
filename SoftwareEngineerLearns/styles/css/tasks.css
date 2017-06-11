@@ -35,8 +35,9 @@ section {
   margin: 20px 0 0 20px; }
 
 table {
-  width: 90%;
-  border-collapse: collapse; }
+  width: 80%;
+  border-collapse: collapse;
+  margin-left: 10%; }
 
 thead {
   line-height: 30px; }
@@ -86,6 +87,12 @@ select {
   overflow: hidden;
   margin-right: 15px;
   width: 200px; }
+
+#actionNav {
+  display: flex;
+  justify-content: space-around; }
+  #actionNav a {
+    width: 55px; }
 
 .required {
   color: red; }

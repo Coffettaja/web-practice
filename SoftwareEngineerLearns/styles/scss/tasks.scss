@@ -43,8 +43,9 @@ section {
 }
 
 table {
-	width: 90%;
+	width: 80%;
 	border-collapse: collapse;
+	margin-left: 10%;
 }
 
 thead {
@@ -111,6 +112,15 @@ select {
 	overflow: hidden;
 	margin-right: 15px;
 	width: 200px;
+}
+
+#actionNav {
+	display: flex;
+	justify-content: space-around;
+
+	a {
+		width: 55px
+	}
 }
 
 .required {

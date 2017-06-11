@@ -8,7 +8,8 @@
 	<script src="dependencies/jquery.validate.js"></script>
 	<script src="dependencies/underscore.js"></script>
 	<script src="scripts/jquery-serialization.js"></script>
-	<script src="scripts/tasks-webstorage.js"></script>
+	<!-- <script src="scripts/tasks-webstorage.js"></script> -->
+	<script src="scripts/tasks-indexeddb.js"></script>
 	<script src="scripts/tasks-controller.js"></script>
 </head>
 <body>
@@ -44,10 +45,10 @@
 		<section>
 			<table id="tblTasks">
 				<colgroup>
-					<col width:"40%">
-					<col width:"15%">
-					<col width:"15%">
-					<col width:"30%">
+					<col width="45%">
+					<col width="15%">
+					<col width="15%">
+					<col width="25%">
 				</colgroup>
 				<thead>
 					<tr>
@@ -81,7 +82,7 @@ $(document).ready(function() {
 	<td><time datetime="<%= rc.requiredBy %>"><%= rc.requiredBy	%></time></td>
 	<td><%= rc.category %></td>
 	<td>
-		<nav>
+		<nav id="actionNav">
 			<a href="#" class="editRow" data-task-id="<%= rc.id %>">Edit</a>
 			<a href="#">Complete</a>
 			<a href="#" class="deleteRow" data-task-id="<%= rc.id %>">Delete</a>
