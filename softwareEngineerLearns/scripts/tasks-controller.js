@@ -61,6 +61,17 @@ window.tasksController = function() {
 								}, errorLogger);
 							});
 
+				// Edit task/row upon edit button click
+				$(taskPage)
+						.find('#tblTasks tbody')
+						.on('click', '.editRow', function(evt) {
+							$(taskPage).find('#taskCreation').removeClass('not');
+							storageEngine.findById('task', $(evt.target).data().taskId, function(task) {
+								$(taskPage).find('form').fromObject(task);
+							}, errorLogger)
+						});
+
+
 				// Save task button appends a new row to the table with the task info
 				// with the help of an _ template
 				$(taskPage)
@@ -70,14 +81,20 @@ window.tasksController = function() {
 								if ($(taskPage).find('form').valid()) {
 									let task = $(taskPage).find('form').toObject();
 									storageEngine.save('task', task, 
-										function(savedTask) { // Guarantees that table is not updated unless safe succesful
-											let rowTemplate = $('#addRow').html(); 
-											$(taskPage).find('#tblTasks tbody')
-													.append(_.template(rowTemplate)(task)); 
+										function() {
+											$(taskPage).find('#tblTasks tbody').empty();
+											tasksController.loadTasks();
+											$(':input').val('');
+											$(taskPage).find('#taskCreation').addClass('not');
+
+										// function(savedTask) { // Guarantees that table is not updated unless safe succesful
+										// 	let rowTemplate = $('#addRow').html(); 
+										// 	$(taskPage).find('#tblTasks tbody')
+										// 			.append(_.template(rowTemplate)(task)); 
 									}, errorLogger);
 								}
 							});
-			
+
 			initialized = true;
 			}
 		}, // init end

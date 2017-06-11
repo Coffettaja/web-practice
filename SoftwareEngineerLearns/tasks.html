@@ -18,6 +18,7 @@
 	<main id="taskPage">
 		<section id="taskCreation" class="not">
 			<form action="" id="taskForm">
+				<input type="hidden" name="id"/>
 				<div>
 					<label for="">Task</label>
 					<input type="text" name="task" class="large" maxlength="200" 
@@ -81,7 +82,7 @@ $(document).ready(function() {
 	<td><%= rc.category %></td>
 	<td>
 		<nav>
-			<a href="#">Edit</a>
+			<a href="#" class="editRow" data-task-id="<%= rc.id %>">Edit</a>
 			<a href="#">Complete</a>
 			<a href="#" class="deleteRow" data-task-id="<%= rc.id %>">Delete</a>
 		</nav>
