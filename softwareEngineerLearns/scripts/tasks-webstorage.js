@@ -130,8 +130,23 @@ window.storageEngine = function() {
 		 * @param  {Function} successCallback 	Invoked after the query completes.
 		 * @param  {Function} errorCallback   	Callback that is invoked in error scenarios.
 		 */
-		findAllByProperty: function(type, propertyName, propertyValue, successCallback, errorCallback) {
+		findByProperty: function(type, propertyName, propertyValue, successCallback, errorCallback) {
+			if (!initialized) {
+				errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
+			}
+			else if (!initializedObjectStores[type]) {
+				errorCallback("store_not_initialized", "The object store " + type + " has not been initialized.");
+			}
 
+			let result = [];
+			let storageItem = getStorageObject(type);
+			$.each(storageItem, (i, v) => {
+				if (v[propertyName] === propertyValue) {
+					result.push(v);
+				}
+			});
+
+			successCallback(result);
 		},
 
 		/**
@@ -142,7 +157,16 @@ window.storageEngine = function() {
 		 * @param  {Function} errorCallback   The callback that is invoked in error scenarios.
 		 */
 		findById: function(type, id, successCallback, errorCallback) {
+			if (!initialized) {
+				errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
+			}
+			else if (!initializedObjectStores[type]) {
+				errorCallback("store_not_initialized", "The object store " + type + " has not been initialized.");
+			}
 
+			let storageItem = getStorageObject(type);
+			let result = storageItem[id];
+			successCallback(result);
 		}
 	}
 }();
