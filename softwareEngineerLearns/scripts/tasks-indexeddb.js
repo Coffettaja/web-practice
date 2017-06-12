@@ -97,7 +97,26 @@ window.storageEngine = function() {
 		},
 
 		findAll: function(type, successCallback, errorCallback) {
+			isDBInitialized(errorCallback);
 
+			let result = [];
+			let transx = database.transaction(type);
+			let objectStore = transx.objectStore(type);
+
+			// A cursor represents a result set, and can be navigated
+			// to access all the records in the result set.
+			objectStore.openCursor().onsuccess = function(event) {
+				let cursor = event.target.result;
+				
+				// if there are no further entries in the set, cursor is null
+				if (cursor) {
+					result.push(cursor.value);
+					cursor.continue(); // where does the program go here? how is this loop...
+				}
+				else {
+					successCallback(result);
+				}
+			}
 		},
 
 		delete: function(type, id, successCallback, errorCallback) {
