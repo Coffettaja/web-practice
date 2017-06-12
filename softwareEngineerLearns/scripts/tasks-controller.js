@@ -27,9 +27,6 @@ window.tasksController = function() {
 					}, errorLogger);
 				}, errorLogger);
 
-			// if (!initialized) {
-			// 	taskPage = page;  // This is kind of private
-
 				// Append star * to required fields
 				$(taskPage)
 						.find('[required]')

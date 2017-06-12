@@ -1,4 +1,5 @@
-storageEngine = function() {
+"use strict";
+window.storageEngine = function() {
 	let database;
 	let objectStores;
 
@@ -24,9 +25,7 @@ storageEngine = function() {
 		},
 
 		initObjectStore: function(type, successCallback, errorCallback) {
-			if (!database) {
-				errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
-			}
+			isDBInitialized(errorCallback);
 
 			let exists = false;
 			$.each(database.objectStoreNames, function(i, v) {
@@ -58,7 +57,43 @@ storageEngine = function() {
 		},
 
 		save: function(type, obj, successCallback, errorCallback) {
+			isDBInitialized(errorCallback);
 
+			if (!obj.id) {
+				// Deletes the id property itself, makes it undefined.
+				// Since IndexedDB is responsible for generating keys,
+				// it does not expect to find an id property at all on
+				// unsaved objects, even one with value of null.
+				delete obj.id; 
+			}
+			else {
+				// Note, first uses toString() if not string, e.g. parseInt(010) === 8
+				obj.id = parseInt(obj.id, 10); 
+			}
+
+			// A transaction groups together a set of operations on one or more object stores.
+			// The transaction will auto-commit once all requests against it have completed.
+			// "readwrite" must be specified to modify the objects in the object store. (default: "read")
+			let transx = database.transaction([type], "readwrite");
+			transx.oncomplete = function(event) {
+				successCallback(obj);
+			}
+
+			transx.onerror = function(event) {
+				errorCallback("transaction_error", "It is not possible to store the object.");
+			}
+
+			let objectStore = transx.objectStore(type);
+			let request = objectStore.put(obj); // put method used to persist the object
+			
+			// onsuccess of request always called before onsuccess of transaction
+			request.onsuccess = function(event) {
+				obj.id = event.target.result;
+			}
+
+			request.onerror = function(event) {
+				errorCallback("object_not_stored", "It is not possible to store the object.");
+			}
 		},
 
 		findAll: function(type, successCallback, errorCallback) {
@@ -78,3 +113,9 @@ storageEngine = function() {
 		}
 	}
 }();
+
+function isDBInitialized(errorCallback) {
+	if (!database) {
+		errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
+	}
+}
