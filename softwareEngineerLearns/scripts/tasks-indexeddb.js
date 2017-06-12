@@ -24,7 +24,37 @@ storageEngine = function() {
 		},
 
 		initObjectStore: function(type, successCallback, errorCallback) {
+			if (!database) {
+				errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
+			}
 
+			let exists = false;
+			$.each(database.objectStoreNames, function(i, v) {
+				if (v === type) {
+					exists = true;
+				}
+			});
+
+			if (exists) {
+				successCallback(null);
+			}
+			else {
+				let version = database.version + 1;
+				database.close();
+				let request = indexedDB.open(window.location.hostname + 'DB', version);
+				request.onsuccess = function(event) {
+					successCallback(null);
+				}
+
+				request.onerror = function(event) {
+					errorCallback("storage_api_not_initialized", "It is not possible to initialize the storage.");
+				}
+
+				request.onupgradeneeded = function(event) {
+					database = event.target.result;
+					let objectStore = database.createObjectStore(type, { keyPath: 'id', autoIncrement: true });
+				}
+			}
 		},
 
 		save: function(type, obj, successCallback, errorCallback) {

@@ -13,17 +13,22 @@ window.tasksController = function() {
 	 _.templateSettings.variable = "rc";
 
 	return {
-		// Any initialization tasks that need to occur when tasks.html loads
-		init: function(page) {
-			storageEngine.init(function() {
-				// Called here to make sure that storageEngine has already been initialized.
-				storageEngine.initObjectStore('task', function() {
-					//
+		// Any initialization tasks that need to occur when tasks.html loads.
+		// callback used to notify its client when loading has finished.
+		init: function(page, callback) {
+			if (initialized) {
+				callback();
+			}
+			else {
+				storageEngine.init(function() {
+					// Called here to make sure that storageEngine has already been initialized.
+					storageEngine.initObjectStore('task', function() {
+						callback();
+					}, errorLogger);
 				}, errorLogger);
-			}, errorLogger);
 
-			if (!initialized) {
-				taskPage = page;  // This is kind of private
+			// if (!initialized) {
+			// 	taskPage = page;  // This is kind of private
 
 				// Append star * to required fields
 				$(taskPage)

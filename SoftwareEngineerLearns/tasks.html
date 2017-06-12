@@ -71,8 +71,9 @@
 </body>
 <script>
 $(document).ready(function() {
-	tasksController.init($("#taskPage"));
-	tasksController.loadTasks();
+	tasksController.init($("#taskPage"), function() {
+		tasksController.loadTasks();	
+	});
 });
 </script>
 
