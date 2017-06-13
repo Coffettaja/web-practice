@@ -144,7 +144,23 @@ window.storageEngine = function() {
 		},
 
 		findByProperty: function(type, propertyName, propertyValue, successCallback, errorCallback) {
+			isDBInitialized(errorCallback);
+			let result = [];
+			let transx = database.transaction(type);
+			let objectStore = transx.objectStore(type);
+			objectStore.openCursor().onsuccess = function(event) {
+				let cursor = event.target.result;
+				if (cursor) {
+					if (cursor.value[propertyName] === propertyValue) {
+						result.push(cursor.value);
+					}
 
+					cursor.continue();
+				}
+				else {
+					successCallback(result);
+				}
+			}
 		},
 
 		findById: function(type, id, successCallback, errorCallback) {
