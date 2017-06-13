@@ -120,7 +120,27 @@ window.storageEngine = function() {
 		},
 
 		delete: function(type, id, successCallback, errorCallback) {
+			let obj = {}; //????
+			obj.id = id;	// What is this needed for?
+			let transx = database.transaction([type], "readwrite");
+			transx.oncomplete = function(event) {
+				successCallback(id);
+			}
 
+			transx.onerror = function(event) {
+				console.log(event);
+				errorCallback("transaction_error", "It is not possible to store the object.");
+			}
+
+			let objectStore = transx.objectStore(type);
+			let request = objectStore.delete(id);
+			request.onsuccess = function(event) {
+
+			}
+
+			request.onerror = function(event) {
+				errorCallback("object_not_stored", "It is not possible to delete the object.");
+			}
 		},
 
 		findByProperty: function(type, propertyName, propertyValue, successCallback, errorCallback) {
@@ -128,7 +148,18 @@ window.storageEngine = function() {
 		},
 
 		findById: function(type, id, successCallback, errorCallback) {
+			isDBInitialized(errorCallback);
+			let transx = database.transaction([type]);
+			let objectStore = transx.objectStore(type);
+			let request = objectStore.get(id);
+			
+			request.onsuccess = function(event) {
+				successCallback(event.target.result);
+			}
 
+			request.onerror = function(event) {
+				errorCallback("object_not_stored", "The requested object could not be located.");
+			}
 		}
 	}
 }();
