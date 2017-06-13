@@ -9,7 +9,7 @@
 	<script src="dependencies/underscore.js"></script>
 	<script src="scripts/jquery-serialization.js"></script>
 	<!-- <script src="scripts/tasks-webstorage.js"></script> -->
-	<script src="scripts/tasks-indexeddb.js"></script>
+	<!-- <script src="scripts/tasks-indexeddb.js"></script> -->
 	<script src="scripts/tasks-controller.js"></script>
 </head>
 <body>
@@ -70,11 +70,37 @@
 	<footer>You have 3 tasks.</footer>
 </body>
 <script>
-$(document).ready(function() {
-	tasksController.init($("#taskPage"), function() {
-		tasksController.loadTasks();	
-	});
-});
+if (window.indexedDB) {
+	$.getScript("scripts/tasks-indexeddb.js")
+		.done(function(script, textStatus) {
+			$(document).ready(function() {
+				tasksController.init($('#taskPage'), function() {
+					tasksController.loadTasks();
+				});
+			})
+		})
+		.fail(function(jqxhr, settings, exception) {
+			console.log("Failed to load indexedDB script.");
+		});
+}
+else if (window.localStorage) {
+	$.getScript("scripts/tasks-webstorage.js")
+		.done(function(script, textStatus) {
+			$(document).ready(function() {
+				tasksController.init($('#taskPage'), function() {
+					tasksController.loadTasks();
+				});
+			})
+		})
+		.fail(function(jqxhr, settings, exception) {
+			console.log("Failed to load web storage script.");
+		});
+}
+// $(document).ready(function() {
+// 	tasksController.init($("#taskPage"), function() {
+// 		tasksController.loadTasks();	
+// 	});
+// });
 </script>
 
 <script type="text/template" id="addRow">

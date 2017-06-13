@@ -27,6 +27,8 @@ window.tasksController = function() {
 					}, errorLogger);
 				}, errorLogger);
 
+				taskPage = page;
+
 				// Append star * to required fields
 				$(taskPage)
 						.find('[required]')
