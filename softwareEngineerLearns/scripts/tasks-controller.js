@@ -20,14 +20,13 @@ window.tasksController = function() {
 				callback();
 			}
 			else {
+				taskPage = page;
 				storageEngine.init(function() {
 					// Called here to make sure that storageEngine has already been initialized.
 					storageEngine.initObjectStore('task', function() {
 						callback();
 					}, errorLogger);
 				}, errorLogger);
-
-				taskPage = page;
 
 				// Append star * to required fields
 				$(taskPage)

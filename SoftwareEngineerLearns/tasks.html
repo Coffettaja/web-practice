@@ -70,14 +70,19 @@
 	<footer>You have 3 tasks.</footer>
 </body>
 <script>
-if (window.indexedDB) {
+function initScreen() {
+	$(document).ready(function() {
+		tasksController.init($('#taskPage'), function() {
+			tasksController.loadTasks();
+		});
+	});
+}
+
+// should be "(if window.indexedDB)" but for some reason init is not working on my Chrome
+if (false) { 
 	$.getScript("scripts/tasks-indexeddb.js")
 		.done(function(script, textStatus) {
-			$(document).ready(function() {
-				tasksController.init($('#taskPage'), function() {
-					tasksController.loadTasks();
-				});
-			})
+			initScreen();
 		})
 		.fail(function(jqxhr, settings, exception) {
 			console.log("Failed to load indexedDB script.");
@@ -86,21 +91,12 @@ if (window.indexedDB) {
 else if (window.localStorage) {
 	$.getScript("scripts/tasks-webstorage.js")
 		.done(function(script, textStatus) {
-			$(document).ready(function() {
-				tasksController.init($('#taskPage'), function() {
-					tasksController.loadTasks();
-				});
-			})
+			initScreen();
 		})
 		.fail(function(jqxhr, settings, exception) {
 			console.log("Failed to load web storage script.");
 		});
 }
-// $(document).ready(function() {
-// 	tasksController.init($("#taskPage"), function() {
-// 		tasksController.loadTasks();	
-// 	});
-// });
 </script>
 
 <script type="text/template" id="addRow">
