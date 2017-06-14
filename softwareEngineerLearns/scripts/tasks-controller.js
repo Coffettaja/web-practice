@@ -3,6 +3,19 @@ window.tasksController = function() {
 	let taskPage;
 	let initialized = false;
 
+	function errorLogger(errorCode, errorMessage) {
+			console.log(errorCode + ": " + errorMessage);
+	}
+
+	function updateTaskCount() {
+		let count = $(taskPage).find('#tblTasks tbody tr').length;
+		$('footer').find('#taskCount').text(count);
+	}
+
+	function clearTask() {
+		$(taskPage).find('form').fromObject({});
+	}
+
 	// "When rending an underscore template, we want top-level
   // variables to be referenced as part of an object. For
   // technical reasons (scope-chain search), this speeds up
@@ -62,6 +75,7 @@ window.tasksController = function() {
 								storageEngine.delete('task', $(evt.target).data().taskId, function() {
 									$(evt.target).parents('tr').remove();
 								}, errorLogger);
+							updateTaskCount();
 							});
 
 				// Edit task/row upon edit button click
@@ -78,28 +92,37 @@ window.tasksController = function() {
 				// Save task button appends a new row to the table with the task info
 				// with the help of an _ template
 				$(taskPage)
-						.find('#saveTask')
-						.click(evt => {
-								evt.preventDefault();
-								if ($(taskPage).find('form').valid()) {
-									let task = $(taskPage).find('form').toObject();
-									storageEngine.save('task', task, 
-										function() {
-											$(taskPage).find('#tblTasks tbody').empty();
-											tasksController.loadTasks();
-											$(':input').val('');
-											$(taskPage).find('#taskCreation').addClass('not');
+					.find('#saveTask')
+					.click(evt => {
+							evt.preventDefault();
+							if ($(taskPage).find('form').valid()) {
+								let task = $(taskPage).find('form').toObject();
+								storageEngine.save('task', task, 
+									function() {
+										$(taskPage).find('#tblTasks tbody').empty();
+										tasksController.loadTasks();
+										clearTask();
+										$(taskPage).find('#taskCreation').addClass('not');
 
-										// function(savedTask) { // Guarantees that table is not updated unless safe succesful
-										// 	let rowTemplate = $('#addRow').html(); 
-										// 	$(taskPage).find('#tblTasks tbody')
-										// 			.append(_.template(rowTemplate)(task)); 
-									}, errorLogger);
-								}
-							});
+									// function(savedTask) { // Guarantees that table is not updated unless safe succesful
+									// 	let rowTemplate = $('#addRow').html(); 
+									// 	$(taskPage).find('#tblTasks tbody')
+									// 			.append(_.template(rowTemplate)(task)); 
+								}, errorLogger);
+							}
+						});
+
+				// Clears the input fields for task adding / editing
+				$(taskPage)
+					.find('#clearTask')
+					.click(evt => {
+						evt.preventDefault();
+						clearTask();
+					});
+
 
 			initialized = true;
-			}
+			} // else end
 		}, // init end
 
 		loadTasks: function() {
@@ -109,13 +132,11 @@ window.tasksController = function() {
 					$(taskPage).find('#tblTasks tbody')
 								.append(_.template(rowTemplate)(task));
 				});
-			}, errorLogger)
+			updateTaskCount();
+			}, errorLogger);
 		}
 	} 
 }(); 	/* Note the last parenthesis! Instantly executed, 
 			 therefore tasksController is the return value, not the function.
 			 This way no other code can construct another tasksController */
 
-function errorLogger(errorCode, errorMessage) {
-			console.log(errorCode + ": " + errorMessage);
-}
