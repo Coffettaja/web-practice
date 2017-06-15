@@ -16,6 +16,18 @@ window.tasksController = function() {
 		$(taskPage).find('form').fromObject({});
 	}
 
+	function renderTable() {
+		$.each($(taskPage).find('#tblTasks tbody tr'), function(idx, row) {
+			let due = Date.parse($(row).find('[datetime]').text());
+			if (due.compareTo(Date.today()) < 0) {
+				$(row).addClass("overdue");
+			}
+			else if (due.compareTo((2).days().fromNow()) <= 0) {
+				$(row).addClass("warning");
+			}
+		});
+	}
+
 	// "When rending an underscore template, we want top-level
   // variables to be referenced as part of an object. For
   // technical reasons (scope-chain search), this speeds up
@@ -62,10 +74,10 @@ window.tasksController = function() {
 						.find('#tblTasks tbody')
 						.on('click', '.taskRow', evt => {
 								$(evt.target)
-								.closest('td')
-								.siblings()
-								.addBack()
-								.toggleClass('rowHighlight');
+									.closest('td')
+									.siblings()
+									.addBack()
+									.toggleClass('rowHighlight');
 							});
 
 				// Delete a row upon delete button click
@@ -133,6 +145,7 @@ window.tasksController = function() {
 								.append(_.template(rowTemplate)(task));
 				});
 			updateTaskCount();
+			renderTable();
 			}, errorLogger);
 		}
 	} 

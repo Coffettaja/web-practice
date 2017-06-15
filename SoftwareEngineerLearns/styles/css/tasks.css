@@ -108,10 +108,10 @@ label.error {
   font-weight: bold; }
 
 .overdue {
-  background: #f7aae5; }
+  background: #F7DCE5; }
 
-.warning {
-  background: #f733f7; }
+tbody tr.taskRow.warning {
+  background: #cad495 !important; }
 
 .taskCompleted {
   text-decoration: line-through; }
