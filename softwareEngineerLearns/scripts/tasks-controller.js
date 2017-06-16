@@ -80,6 +80,17 @@ window.tasksController = function() {
 									.toggleClass('rowHighlight');
 							});
 
+				$(taskPage)
+					.find('#tblTasks tbody')
+					.on('click', '.completeRow', function(evt) {
+						storageEngine.findById('task', $(evt.target).data().taskId, function(task) {
+							task.complete = true;
+							storageEngine.save('task', task, function() {
+								tasksController.loadTasks();
+							}, errorLogger);
+						}, errorLogger);
+					});
+
 				// Delete a row upon delete button click
 				$(taskPage)
 						.find('#tblTasks tbody')
@@ -138,11 +149,15 @@ window.tasksController = function() {
 		}, // init end
 
 		loadTasks: function() {
+			$(taskPage).find('#tblTasks tbody').empty();
 			storageEngine.findAll('task', function(tasks) {
 				$.each(tasks, (index, task) => {
+					if (!task.complete) { // looks stupid but probably makes sure that the property exists...
+						task.complete = false;
+					}
 					let rowTemplate = $('#addRow').html(); 
 					$(taskPage).find('#tblTasks tbody')
-								.append(_.template(rowTemplate)(task));
+								.append(_.template(rowTemplate)(task)); // I wonder what I did here with (task)...
 				});
 			updateTaskCount();
 			renderTable();

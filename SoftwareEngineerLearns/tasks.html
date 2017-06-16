@@ -100,13 +100,15 @@ else if (window.localStorage) {
 
 <script type="text/template" id="addRow">
 <tr class="taskRow">
-	<td><%= rc.task %></td>
-	<td><time datetime="<%= rc.requiredBy %>"><%= rc.requiredBy	%></time></td>
-	<td><%= rc.category %></td>
+	<td <% if (rc.complete == true) { %> class="taskCompleted" <% } %>><%= rc.task %></td>
+	<td <% if (rc.complete == true) { %> class="taskCompleted" <% } %>><time datetime="<%= rc.requiredBy %>"><%= rc.requiredBy	%></time></td>
+	<td <% if (rc.complete == true) { %> class="taskCompleted" <% } %>><%= rc.category %></td>
 	<td>
 		<nav id="actionNav">
+			<% if (!rc.complete) { %>
 			<a href="#" class="editRow" data-task-id="<%= rc.id %>">Edit</a>
-			<a href="#">Complete</a>
+			<a href="#" class="completeRow" data-task-id="<%= rc.id %>">Complete</a>
+			<% } %>
 			<a href="#" class="deleteRow" data-task-id="<%= rc.id %>">Delete</a>
 		</nav>
 	</td>
