@@ -151,6 +151,12 @@ window.tasksController = function() {
 		loadTasks: function() {
 			$(taskPage).find('#tblTasks tbody').empty();
 			storageEngine.findAll('task', function(tasks) {
+
+				// Sort by due date (closest first)
+				tasks.sort(function(first, second) {
+					return Date.parse(first.requiredBy).compareTo(Date.parse(second.requiredBy));
+				});
+				
 				$.each(tasks, (index, task) => {
 					if (!task.complete) { // looks stupid but probably makes sure that the property exists...
 						task.complete = false;
