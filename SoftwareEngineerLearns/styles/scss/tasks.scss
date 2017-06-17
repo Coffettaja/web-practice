@@ -66,10 +66,6 @@ td {
 	padding-left: 10px;
 }
 
-tr:nth-child(2n) td {
-	background-color: #e0e0e0;
-}
-
 // .even {
 // 	background: #e0e0e0;
 // }
@@ -140,15 +136,28 @@ label.error {
 	font-weight: bold;
 }
 
+$warning_col: #cad495;
+$overdue_col: #F7DCE5;
+$completed_col: hsla(102, 51%, 80%, 1);
+
+// tr:nth-child(2n) {
+// 	background-color: #e0e0e0;
+// }
+
 .overdue {
-	background: #F7DCE5;
+	background: $overdue_col;
 }
 
-tbody tr.taskRow.warning {
-	background: #cad495 !important; 
+.warning {
+	background: $warning_col; 
 }
 
-.taskCompleted {
+.taskRow .taskCompleted {
 	text-decoration: line-through;
+	background-color: $completed_col;
+
+	&:last-child {
+		text-decoration: none;
+	}
 }
 

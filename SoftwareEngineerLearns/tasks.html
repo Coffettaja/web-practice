@@ -103,7 +103,7 @@ else if (window.localStorage) {
 	<td <% if (rc.complete == true) { %> class="taskCompleted" <% } %>><%= rc.task %></td>
 	<td <% if (rc.complete == true) { %> class="taskCompleted" <% } %>><time datetime="<%= rc.requiredBy %>"><%= rc.requiredBy	%></time></td>
 	<td <% if (rc.complete == true) { %> class="taskCompleted" <% } %>><%= rc.category %></td>
-	<td>
+	<td <% if (rc.complete == true) { %> class="taskCompleted" <% } %>>
 		<nav id="actionNav">
 			<% if (!rc.complete) { %>
 			<a href="#" class="editRow" data-task-id="<%= rc.id %>">Edit</a>

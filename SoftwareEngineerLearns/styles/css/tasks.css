@@ -53,9 +53,6 @@ td {
   line-height: 25px;
   padding-left: 10px; }
 
-tr:nth-child(2n) td {
-  background-color: #e0e0e0; }
-
 nav {
   margin: 15px 0 10px 0; }
   nav a {
@@ -110,10 +107,13 @@ label.error {
 .overdue {
   background: #F7DCE5; }
 
-tbody tr.taskRow.warning {
-  background: #cad495 !important; }
+.warning {
+  background: #cad495; }
 
-.taskCompleted {
-  text-decoration: line-through; }
+.taskRow .taskCompleted {
+  text-decoration: line-through;
+  background-color: #c2e6b2; }
+  .taskRow .taskCompleted:last-child {
+    text-decoration: none; }
 
 /*# sourceMappingURL=tasks.css.map */

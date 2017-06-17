@@ -3,3 +3,4 @@
 * Improve row highlighting
 * External template files, require.js?
 * Safer id than just time in milliseconds
+* Possible to easily darken every second row regardless of status?
