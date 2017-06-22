@@ -1,9 +1,15 @@
+# version 1  
+# To refresh the application cache, this file has to change...
+# The app cache first presents the user with the cached version of the page,
+# and then begins to update and store the new version in the cache.
+# ==> user needs to load the page twice to see the new version
+# Mega annoying especially during development
 CACHE MANIFEST
 tasks.html
 dependencies/date.js
+dependencies/underscore.js
 dependencies/jquery.min.js
 dependencies/jquery.validate.js
-dependencies/underscore.js
 scripts/jquery-serialization.js
 scripts/tasks-controller.js
 scripts/tasks-indexeddb.js
@@ -11,7 +17,8 @@ scripts/tasks-webstorage.js
 styles/css/tasks.css
 
 FALLBACK:
-
+scripts/tasks-webstorage.js scripts/tasks-webstorage.js
+scripts/tasks-indexeddb.js scripts/tasks-indexeddb.js
 
 NETWORK:
-
+*
