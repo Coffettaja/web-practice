@@ -1,0 +1,17 @@
+CACHE MANIFEST
+tasks.html
+dependencies/date.js
+dependencies/jquery.min.js
+dependencies/jquery.validate.js
+dependencies/underscore.js
+scripts/jquery-serialization.js
+scripts/tasks-controller.js
+scripts/tasks-indexeddb.js
+scripts/tasks-webstorage.js
+styles/css/tasks.css
+
+FALLBACK:
+
+
+NETWORK:
+
