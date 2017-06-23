@@ -22,7 +22,7 @@ window.tasksController = function() {
 		if (tokens.length == 3) {
 			let task = {};
 			task.task = tokens[0];
-			task.requireBy = tokens[1];
+			task.requiredBy = tokens[1];
 			task.category = tokens[2];
 			return task;
 		}
