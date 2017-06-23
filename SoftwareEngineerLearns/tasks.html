@@ -8,6 +8,7 @@
 	<script src="dependencies/jquery.validate.js"></script>
 	<script src="dependencies/underscore.js"></script>
 	<script src="dependencies/date.js"></script>
+	<script src="dependencies/jquery.csv-0.71.js"></script>
 	<script src="scripts/jquery-serialization.js"></script>
 	<script src="scripts/tasks-controller.js"></script>
 </head>
@@ -64,6 +65,12 @@
 			<nav>
 				<a href="#" id="btnAddTask">Add task</a>
 			</nav>
+		</section>
+		<section id="csvImport">
+			<div>
+				<label for="task">Import tasks from CSV file</label>
+				<input type="file" id="importFile" name="importFile">
+			</div>
 		</section>
 	</main>
 	<footer>You have <span id="taskCount"></span> tasks.</footer>

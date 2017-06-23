@@ -16,6 +16,30 @@ window.tasksController = function() {
 		$(taskPage).find('form').fromObject({});
 	}
 
+	function loadTask(csvTask) {
+		let tokens = $.csv.toArray(csvTask); // uses jquery csv library
+		if (tokens.length == 3) {
+			let task = {};
+			task.task = tokens[0];
+			task.requireBy = tokens[1];
+			task.category = tokens[2];
+			return task;
+		}
+		return null;
+	}
+
+	function loadFromCSV(event) {
+		const reader = new FileReader();
+		reader.onload = function(evt) {
+		 let contents = evt.target.result;
+		 let lines = contents.split('\n');
+		};
+		reader.onerror = function(evt) {
+			errorLogger("cannot_read_file", "The file specified cannot be read.");
+		};
+		reader.readAsText(event.target.files[0]);
+	}
+
 	function renderTable() {
 		$.each($(taskPage).find('#tblTasks tbody tr'), function(idx, row) {
 			let due = Date.parse($(row).find('[datetime]').text());
@@ -142,6 +166,8 @@ window.tasksController = function() {
 						evt.preventDefault();
 						clearTask();
 					});
+
+				$('#importFile').change(loadFromCSV);
 
 
 			initialized = true;
