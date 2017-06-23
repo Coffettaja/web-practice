@@ -16,8 +16,9 @@ window.tasksController = function() {
 		$(taskPage).find('form').fromObject({});
 	}
 
+	// tokenizes a task using the csv library, and constructs it
 	function loadTask(csvTask) {
-		let tokens = $.csv.toArray(csvTask); // uses jquery csv library
+		let tokens = $.csv.toArray(csvTask);
 		if (tokens.length == 3) {
 			let task = {};
 			task.task = tokens[0];
@@ -33,6 +34,15 @@ window.tasksController = function() {
 		reader.onload = function(evt) {
 		 let contents = evt.target.result;
 		 let lines = contents.split('\n');
+		 let tasks = [];
+		 $.each(lines, function(index, val) {
+		 	if (index >= 1 && val) { // header line is skipped
+		 		let task = loadTask(val);
+		 		if (task) {
+		 			tasks.push(task);
+		 		}
+		 	}
+		 });
 		};
 		reader.onerror = function(evt) {
 			errorLogger("cannot_read_file", "The file specified cannot be read.");

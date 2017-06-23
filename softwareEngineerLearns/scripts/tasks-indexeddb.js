@@ -3,6 +3,12 @@ window.storageEngine = function() {
 	let database;
 	let objectStores;
 
+	function isDBInitialized(errorCallback) {
+	if (!database) {
+		errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
+	}
+}
+
 	return {
 		init: function(successCallback, errorCallback) {
 				if (window.indexedDB) {
@@ -25,7 +31,7 @@ window.storageEngine = function() {
 		},
 
 		initObjectStore: function(type, successCallback, errorCallback) {
-			isDBInitialized(errorCallback, database);
+			isDBInitialized(errorCallback);
 
 			let exists = false;
 			$.each(database.objectStoreNames, function(i, v) {
@@ -57,7 +63,7 @@ window.storageEngine = function() {
 		},
 
 		save: function(type, obj, successCallback, errorCallback) {
-			isDBInitialized(errorCallback, database);
+			isDBInitialized(errorCallback);
 
 			if (!obj.id) {
 				// Deletes the id property itself, makes it undefined.
@@ -96,8 +102,37 @@ window.storageEngine = function() {
 			}
 		},
 
+		saveAll: function(type, objs, successCallback, errorCallback) {
+			isDBInitialized(errorCallback);
+
+			let trasnx = database.transaction([type], "readwrite");
+			transx.oncomplete = function(event) {
+				successCallback(objs);
+			};
+			transx.onerror = function(event) {
+				errorCallback("transaction_error", "It is not possible to store the object.");
+			};
+
+			let objectStore = transx.objectStore(type);
+			$.each(objs, function(index, obj) {
+				if (!obj.id) {
+					delete obj.id;
+				}
+				else {
+					obj.id = parseInt(obj.id);
+				}
+				let request = objectStore.put(obj);
+				request.onsuccess = function(event) {
+					obj.id = event.target.result;
+				};
+				request.onerror = function(event) {
+					errorCallback("object_not_stored", "It is not possible to store the object.");
+				};
+			});
+		},
+
 		findAll: function(type, successCallback, errorCallback) {
-			isDBInitialized(errorCallback, database);
+			isDBInitialized(errorCallback);
 
 			let result = [];
 			let transx = database.transaction(type);
@@ -144,7 +179,7 @@ window.storageEngine = function() {
 		},
 
 		findByProperty: function(type, propertyName, propertyValue, successCallback, errorCallback) {
-			isDBInitialized(errorCallback, database);
+			isDBInitialized(errorCallback);
 			let result = [];
 			let transx = database.transaction(type);
 			let objectStore = transx.objectStore(type);
@@ -164,7 +199,7 @@ window.storageEngine = function() {
 		},
 
 		findById: function(type, id, successCallback, errorCallback) {
-			isDBInitialized(errorCallback, database);
+			isDBInitialized(errorCallback);
 			let transx = database.transaction([type]);
 			let objectStore = transx.objectStore(type);
 			let request = objectStore.get(id);
@@ -180,8 +215,3 @@ window.storageEngine = function() {
 	}
 }();
 
-function isDBInitialized(errorCallback, database) {
-	if (!database) {
-		errorCallback("storage_api_not_initialized", "The storage engine has not been initialized.");
-	}
-}
