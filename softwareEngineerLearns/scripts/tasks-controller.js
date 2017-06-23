@@ -43,7 +43,12 @@ window.tasksController = function() {
 		 		}
 		 	}
 		 });
+
+		 storageEngine.saveAll('task', tasks, function() {
+		 	tasksController.loadTasks();
+		 }, errorLogger);
 		};
+
 		reader.onerror = function(evt) {
 			errorLogger("cannot_read_file", "The file specified cannot be read.");
 		};
