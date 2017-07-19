@@ -1,8 +1,16 @@
 html {
   font-size: 10px;
-  background: url(http://i.imgur.com/b9r5sEL.jpg) bottom center;
+  background: url("drums.jpg") center 75% no-repeat fixed #464646;
   background-size: cover;
 }
+
+/*@media only screen and (max-width: 767px) {
+  Should load a smaller bg image here for mobile devices...
+  html {
+    background-image: url(smallerBackgroundImage.jpg);
+  }
+}*/
+
 body,html {
   margin: 0;
   padding: 0;
@@ -18,17 +26,21 @@ body,html {
 }
 
 .key {
-  border: .4rem solid black;
-  border-radius: .5rem;
+  border: .25rem solid #bc8517;
+  border-radius: 10rem;
   margin: 1rem;
   font-size: 1.5rem;
-  padding: 1rem .5rem;
+  padding: 3rem .5rem;
   transition: all .07s ease;
   width: 10rem;
+  height: 5rem;
   text-align: center;
   color: white;
-  background: rgba(0,0,0,0.4);
-  text-shadow: 0 0 .5rem black;
+  background: rgba(186, 140, 28, 0.4);
+  /*text-shadow: 0 0 .5rem black;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .playing {
@@ -39,7 +51,11 @@ body,html {
 
 kbd {
   display: block;
-  font-size: 4rem;
+  font-size: 8rem;
+  color: black;
+  -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
 }
 
 .sound {
