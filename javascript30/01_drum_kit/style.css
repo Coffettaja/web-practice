@@ -18,7 +18,7 @@ body,html {
 }
 
 .keys {
-  display: flex;
+  /*display: flex;*/
   flex: 1;
   min-height: 100vh;
   align-items: center;
@@ -41,6 +41,47 @@ body,html {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+}
+
+.key[data-kb="W"] {
+  top: 5%;
+  left: 410px;
+}
+
+.key[data-kb="D"] {
+  top: 25%;
+  left: 440px;
+}
+
+.key[data-kb="S"] {
+  top: 25%;
+  left: 320px;
+}
+
+.key[data-kb="V"] {
+  bottom: 15%;
+  left: 530px;
+}
+
+.key[data-kb="B"] {
+  bottom: 15%;
+  left: 670px;
+}
+
+.key[data-kb="Q"] {
+  top: 1%;
+  left: 18%;
+}
+
+.key[data-kb="K"] {
+  top: 10%;
+  right: 24%;
+}
+
+.key[data-kb="J"] {
+  top: 12%;
+  right: 33%;
 }
 
 .playing {
