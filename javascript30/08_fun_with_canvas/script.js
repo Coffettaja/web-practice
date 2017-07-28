@@ -1,9 +1,11 @@
 const $canvas = $('#draw')
+const container = $('.container')[0]
 const canvas = $('#draw')[0]
-const $colors = $('.color')
+const $colors = $('#colors div')
 const context = canvas.getContext('2d') // context is where all the drawing is done
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight - 100
+canvas.width = 2000//$(container).innerWidth()
+canvas.height = $(container).innerHeight()
+console.log($(container).innerHeight())
 
 context.strokeStyle = 'hsl(0, 85%, 50%)' // starting color
 //context.lineJoin = 'round' // when line meets another line

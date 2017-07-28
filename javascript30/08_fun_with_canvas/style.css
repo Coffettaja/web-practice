@@ -7,19 +7,40 @@ canvas {
 	background-color: hsl(180, 30%, 80%);
 }
 
+.container {
+	width: 96%;
+	height: 500px;
+	margin: 1% 2% 0;
+	overflow: hidden; 
+}
+
+.options {
+	margin: 0 1.4%;
+}
+
 #colors {
 	position: relative;
 	width: 100%;
 	height: auto;
 	display: flex;
+	justify-content: space-between;
 	background-color: hsl(180, 20%, 20%);
 }
 
-.color {
-	flex: 1;
+#colors div {
+	/*flex: 1;*/
 	height: 75px;
+	width: 120px;
 	border: solid blue 1px;
-	margin: 5px;
+	margin: 6px;
+}
+
+.eraser {
+	background-color: hsl(180, 30%, 80%);
+}
+
+.color-0 {
+	background-color: black;
 }
 
 .color-1 {
