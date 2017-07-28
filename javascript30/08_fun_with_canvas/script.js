@@ -1,9 +1,11 @@
+const $canvas = $('#draw')
 const canvas = $('#draw')[0]
+const $colors = $('.color')
 const context = canvas.getContext('2d') // context is where all the drawing is done
 canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.height = window.innerHeight - 100
 
-context.strokeStyle = '#ca3334' // starting color
+context.strokeStyle = 'hsl(0, 85%, 50%)' // starting color
 //context.lineJoin = 'round' // when line meets another line
 context.lineCap = 'round' // when line ends 
 context.lineWidth = 50
@@ -21,7 +23,7 @@ function draw(event) {
 		return
 	}
 	const e = event.originalEvent
-	context.strokeStyle = `hsl(${hue}, 80%, 55%)`
+	// context.strokeStyle = `hsl(${hue}, 80%, 55%)`
 	context.beginPath()
 	// start from
 	context.moveTo(lastX, lastY)
@@ -46,11 +48,18 @@ function draw(event) {
 	}
 }
 
-$(canvas).on('mousemove', draw)
-$(canvas).on('mousedown', (e) => { 
+// change the drawing color to the color clicked
+function changeColor(e) {
+	context.strokeStyle = $(this).css('background-color')
+}
+
+$canvas.on('mousemove', draw)
+$canvas.on('mousedown', (e) => { 
 	isDrawing = true
 	;[lastX, lastY] = [e.offsetX, e.offsetY]
 	draw(e)
 })
-$(canvas).on('mouseup', () => isDrawing = false)
-$(canvas).on('mouseout', () => isDrawing = false)
+$canvas.on('mouseup', () => isDrawing = false)
+$canvas.on('mouseout', () => isDrawing = false)
+
+$colors.on('click', changeColor)
