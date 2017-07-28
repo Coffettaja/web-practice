@@ -60,3 +60,10 @@ $canvas.on('mouseout', () => isDrawing = false)
 
 $colors.on('click', changeColor)
 $thickness.on('click', changeThickness)
+
+// TODO
+// Thickness selector same size for all
+// Cursor change?
+// Options can be hidden
+// Nicer looking background
+// Changing background for canvas?
