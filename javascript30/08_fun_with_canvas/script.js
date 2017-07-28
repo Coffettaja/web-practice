@@ -2,31 +2,31 @@ const $canvas = $('#draw')
 const container = $('.container')[0]
 const canvas = $('#draw')[0]
 const $colors = $('#colors div')
+const $thickness = $('#thickness div')
 const context = canvas.getContext('2d') // context is where all the drawing is done
 canvas.width = 2000//$(container).innerWidth()
-canvas.height = $(container).innerHeight()
-console.log($(container).innerHeight())
+canvas.height = 1000 //$(container).innerHeight()
 
-context.strokeStyle = 'hsl(0, 85%, 50%)' // starting color
+const startingColor = 'hsl(0, 85%, 50%)'
+context.strokeStyle = startingColor // starting color
+$thickness.css('background-color', startingColor)
 //context.lineJoin = 'round' // when line meets another line
 context.lineCap = 'round' // when line ends 
-context.lineWidth = 50
+context.lineWidth = 5
 
 let isDrawing = false
 let lastX = 0
 let lastY = 0
-let hue = 0
-let direction = true 
-let maxWidth = 55
-let minWidth = 20
+
 
 function draw(event) {
 	if (!isDrawing) {
 		return
 	}
 	const e = event.originalEvent
-	// context.strokeStyle = `hsl(${hue}, 80%, 55%)`
+
 	context.beginPath()
+
 	// start from
 	context.moveTo(lastX, lastY)
 	// go to
@@ -34,25 +34,19 @@ function draw(event) {
 	context.stroke()
 
 	;[lastX, lastY] = [e.offsetX, e.offsetY]
-	hue++
-	if (hue > 360) {
-		hue = 0
-	}
-
-	if (context.lineWidth >= maxWidth || context.lineWidth <= minWidth) {
-		direction = !direction
-	}
-
-	if (direction) {
-		context.lineWidth++
-	} else {
-		context.lineWidth--
-	}
 }
 
 // change the drawing color to the color clicked
 function changeColor(e) {
-	context.strokeStyle = $(this).css('background-color')
+	const color = $(this).css('background-color')
+	context.strokeStyle = color
+	$thickness.css('background-color', color)
+}
+
+function changeThickness(e) {
+	// width and height usually same, but width might change when resizing the window
+	const width = $(this).css('height') 
+	context.lineWidth = parseInt(width)
 }
 
 $canvas.on('mousemove', draw)
@@ -65,3 +59,4 @@ $canvas.on('mouseup', () => isDrawing = false)
 $canvas.on('mouseout', () => isDrawing = false)
 
 $colors.on('click', changeColor)
+$thickness.on('click', changeThickness)

@@ -9,13 +9,19 @@ canvas {
 
 .container {
 	width: 96%;
-	height: 500px;
+	height: 490px;
 	margin: 1% 2% 0;
 	overflow: hidden; 
 }
 
 .options {
+	/*width: 90%;*/
+	background-color: hsl(180, 20%, 20%);
 	margin: 0 1.4%;
+	position: fixed;
+	right: 0.5%;
+	left: 0.5%;
+	bottom: 0;
 }
 
 #colors {
@@ -27,12 +33,53 @@ canvas {
 	background-color: hsl(180, 20%, 20%);
 }
 
+#thickness {
+	width: 30%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 0
+}
+
+#thickness div {
+	height: 40px;
+	width: 40px;
+	margin: 0 7px;
+	border-radius: 50%;
+	background-color: hsl(80, 20%, 20%);
+	border: solid hsl(160, 60%, 50%) 1.5px;
+}
+
+#thickness .thickness-2 {
+	height: 25px;
+	width: 25px;
+}
+
+#thickness .thickness-3 {
+	height: 15px;
+	width: 15px;
+}
+
+#thickness .thickness-4 {
+	height: 5px;
+	width: 5px;
+}
+
+
 #colors div {
 	/*flex: 1;*/
 	height: 75px;
 	width: 120px;
-	border: solid blue 1px;
-	margin: 6px;
+	border: solid hsl(160, 60%, 50%) 1.5px;
+	margin: 5px 3px;
+}
+
+#colors div:first-child {
+	margin-left: 0
+}
+
+#colors div:last-child {
+	margin-right: 0;
 }
 
 .eraser {
