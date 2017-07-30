@@ -5,6 +5,7 @@ html, body {
 
 canvas {
 	background-color: hsl(180, 30%, 80%);
+	cursor: url('cursor.png'), auto;
 }
 
 .container {
@@ -15,7 +16,6 @@ canvas {
 }
 
 .options {
-	/*width: 90%;*/
 	background-color: hsl(180, 20%, 20%);
 	margin: 0 1.4%;
 	position: fixed;
@@ -47,7 +47,7 @@ canvas {
 	/* Big horizontal margin required so that the clicking areas would never overlap */
 	margin: 0 18px; 
 	border-radius: 50%;
-	border: solid hsl(160, 60%, 50%) 1.5px;
+	border: solid transparent 3px;
 }
 
 
@@ -66,10 +66,11 @@ canvas {
 	width: 5px;
 }
 
-/*
+
 #thickness div:hover {
-	animation: ;
-}*/
+	border: 3px solid white;
+	cursor: pointer;
+}
 
 /* Clicking area same for every thickness */
 
@@ -140,10 +141,15 @@ right: 18px;
 
 #colors div {
 	/*flex: 1;*/
-	height: 75px;
-	width: 120px;
-	border: solid hsl(160, 60%, 50%) 1.5px;
-	margin: 5px 3px;
+	height: 70px;
+	width: 110px;
+	border: solid transparent 3px;
+	margin: 4px 3px;
+}
+
+#colors div:hover {
+	border: 3px solid white;
+	cursor: pointer;
 }
 
 #colors div:first-child {
