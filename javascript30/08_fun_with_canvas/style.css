@@ -44,11 +44,12 @@ canvas {
 #thickness div {
 	height: 40px;
 	width: 40px;
-	margin: 0 7px;
+	/* Big horizontal margin required so that the clicking areas would never overlap */
+	margin: 0 18px; 
 	border-radius: 50%;
-	background-color: hsl(80, 20%, 20%);
 	border: solid hsl(160, 60%, 50%) 1.5px;
 }
+
 
 #thickness .thickness-2 {
 	height: 25px;
@@ -63,6 +64,77 @@ canvas {
 #thickness .thickness-4 {
 	height: 5px;
 	width: 5px;
+}
+
+/*
+#thickness div:hover {
+	animation: ;
+}*/
+
+/* Clicking area same for every thickness */
+
+#thickness div:before {
+	content: "";
+	display: block;
+	position: relative;
+	height: 40px;
+	width: 40px;
+	/*border: 1px solid red;*/
+}
+
+#thickness .thickness-1:before {
+	bottom: 1px;
+	left: 0px;
+}
+
+#thickness .thickness-2:before {
+	bottom: 8px;
+	right: 8px;
+}
+
+#thickness .thickness-3:before {
+	bottom: 13px;
+	right: 13px;
+}
+
+#thickness .thickness-4:before {
+bottom: 18px;
+right: 18px;
+}
+
+
+/* Need separate after element for styling because can't set before element 
+behind the actual element or it won't work when clicked */
+#thickness div:after {
+	content: "";
+	display: block;
+	position: relative;
+	height: 40px;
+	width: 40px;
+	z-index: -1;
+	border-radius: 50%;
+	background-color: hsl(180, 20%, 18%);
+}
+
+
+#thickness .thickness-1:after {
+	bottom: 41px;
+	left: 0px;
+}
+
+#thickness .thickness-2:after {
+	bottom: 48px;
+	right: 8px;
+}
+
+#thickness .thickness-3:after {
+	bottom: 53px;
+	right: 13px;
+}
+
+#thickness .thickness-4:after {
+bottom: 58px;
+right: 18px;
 }
 
 
