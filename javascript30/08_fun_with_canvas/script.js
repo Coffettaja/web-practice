@@ -2,20 +2,22 @@ const $canvas = $('#draw')
 const container = $('.container')[0]
 const canvas = $('#draw')[0]
 const $colors = $('#colors div')
-const $startingColor = $('.color-2')
-const $startingThickness = $('.thickness-2')
+let $selectedColor = $('.color-1')
+let $selectedThickness = $('.thickness-4')
 const $thickness = $('#thickness div')
 const context = canvas.getContext('2d') // context is where all the drawing is done
+
 canvas.width = 2000//$(container).innerWidth()
 canvas.height = 1000 //$(container).innerHeight()
 
-const startingColor = $startingColor.css('background-color') //'hsl(0, 85%, 50%)'
-$startingColor.toggleClass('is-selected')
+const startingColor = $selectedColor.css('background-color') 
+$selectedColor.toggleClass('is-selected')
+$selectedThickness.toggleClass('is-selected')
 context.strokeStyle = startingColor // starting color
 $thickness.css('background-color', startingColor)
 //context.lineJoin = 'round' // when line meets another line
 context.lineCap = 'round' // when line ends 
-context.lineWidth = 5
+context.lineWidth = parseInt($selectedThickness.css('height'))
 
 let isDrawing = false
 let lastX = 0
@@ -41,15 +43,27 @@ function draw(event) {
 
 // change the drawing color to the color clicked
 function changeColor(e) {
+	if ($selectedColor.is($(this))) {
+		return
+	}
 	const color = $(this).css('background-color')
 	context.strokeStyle = color
 	$thickness.css('background-color', color)
+	$selectedColor.removeClass('is-selected')
+	$(this).addClass('is-selected')
+	$selectedColor = $(this)
 }
 
 function changeThickness(e) {
+	if ($selectedThickness.is($(this))) {
+		return
+	}
 	// width and height usually same, but width might change when resizing the window
 	const width = $(this).css('height') 
 	context.lineWidth = parseInt(width)
+	$selectedThickness.removeClass('is-selected')
+	$(this).addClass('is-selected')
+	$selectedThickness = $(this)
 }
 
 $canvas.on('mousemove', draw)
@@ -64,8 +78,9 @@ $canvas.on('mouseout', () => isDrawing = false)
 $colors.on('click', changeColor)
 $thickness.on('click', changeThickness)
 
+
 // TODO
-// Mobile version
 // Options can be hidden
+// Fix drag and drop
 // Nicer looking background
 // Changing background for canvas?
