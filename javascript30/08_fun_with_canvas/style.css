@@ -24,6 +24,10 @@ canvas {
 	bottom: 0;
 }
 
+.options .hidden {
+	/*test*/
+}
+
 #colors {
 	position: relative;
 	width: 100%;
@@ -229,4 +233,21 @@ right: 18px;
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.toggle {
+	position: absolute;
+	background-color: hsl(180, 20%, 18%);
+	border: 4px solid hsl(180, 30%, 80%);
+	color: black;
+	left: 50%;
+	top: -15px;
+	height: 40px;
+	border-radius: 50%;
+	width: 40px;
+	font-size: 20px;
+}
+
+.toggle:hover {
+	color: white;
 }

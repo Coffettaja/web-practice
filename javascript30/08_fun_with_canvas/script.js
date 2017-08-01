@@ -1,9 +1,11 @@
 const $canvas = $('#draw')
 const container = $('.container')[0]
 const canvas = $('#draw')[0]
+const $options = $('.options')
 const $colors = $('#colors div')
 let $selectedColor = $('.color-1')
 let $selectedThickness = $('.thickness-4')
+const $toggle = $('.toggle')
 const $thickness = $('#thickness div')
 const context = canvas.getContext('2d') // context is where all the drawing is done
 
@@ -66,6 +68,10 @@ function changeThickness(e) {
 	$selectedThickness = $(this)
 }
 
+function toggleOptions(e) {
+	console.log("TODO TOGGLE")
+}
+
 $canvas.on('mousemove', draw)
 $canvas.on('mousedown', (e) => { 
 	isDrawing = true
@@ -78,6 +84,7 @@ $canvas.on('mouseout', () => isDrawing = false)
 $colors.on('click', changeColor)
 $thickness.on('click', changeThickness)
 
+$toggle.on('click', toggleOptions)
 
 // TODO
 // Options can be hidden
