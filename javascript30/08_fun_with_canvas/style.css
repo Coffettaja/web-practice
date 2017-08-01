@@ -140,11 +140,16 @@ right: 18px;
 
 
 #colors div {
-	/*flex: 1;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: transparent;
+
 	height: 70px;
 	width: 110px;
 	border: solid transparent 3px;
 	margin: 4px 3px;
+
 }
 
 #colors div:hover {
@@ -198,4 +203,22 @@ right: 18px;
 
 .color-8 {
 	background-color: hsl(315, 85%, 50%);
+}
+
+#thickness .is-selected {
+	border: 3px solid white;
+}
+
+#colors .is-selected {
+	border: 3px solid white;
+	color: white;
+
+	text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
+}
+
+#colors p {
+	font-size: 35px
 }
