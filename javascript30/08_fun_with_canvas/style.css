@@ -10,7 +10,6 @@ canvas {
 
 .container {
 	width: 96%;
-	height: 490px;
 	margin: 1% 2% 0;
 	overflow: hidden; 
 }
@@ -22,10 +21,21 @@ canvas {
 	right: 0.5%;
 	left: 0.5%;
 	bottom: 0;
+	transition: bottom 0.2s;
 }
 
-.options .hidden {
-	/*test*/
+.options.hidden {
+	bottom: -10%;
+}
+
+.options div {
+	transition: opacity 0.2s;
+}
+
+.options.hidden div {
+	opacity: 0;
+	display: none;
+	bottom: -100px;
 }
 
 #colors {
@@ -246,6 +256,19 @@ right: 18px;
 	border-radius: 50%;
 	width: 40px;
 	font-size: 20px;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+@media (max-width: 600px) {
+	.toggle {
+		left: 85%;
+	}
 }
 
 .toggle:hover {

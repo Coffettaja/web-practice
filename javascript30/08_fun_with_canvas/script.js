@@ -69,7 +69,7 @@ function changeThickness(e) {
 }
 
 function toggleOptions(e) {
-	console.log("TODO TOGGLE")
+	$options.toggleClass('hidden')
 }
 
 $canvas.on('mousemove', draw)
@@ -87,7 +87,6 @@ $thickness.on('click', changeThickness)
 $toggle.on('click', toggleOptions)
 
 // TODO
-// Options can be hidden
 // Fix drag and drop
 // Nicer looking background
 // Changing background for canvas?
