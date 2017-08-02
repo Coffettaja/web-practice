@@ -4,6 +4,8 @@ const canvas = $('#draw')[0]
 const $options = $('.options')
 const $colors = $('#colors div')
 let $selectedColor = $('.color-1')
+let selectedColorNum = $selectedColor.find('p').text()
+$selectedColor.find('p').text('✓')
 let $selectedThickness = $('.thickness-4')
 const $toggle = $('.toggle')
 const $thickness = $('#thickness div')
@@ -52,7 +54,10 @@ function changeColor(e) {
 	context.strokeStyle = color
 	$thickness.css('background-color', color)
 	$selectedColor.removeClass('is-selected')
+	$selectedColor.find('p').text(selectedColorNum)
+	selectedColorNum = $(this).find('p').text()
 	$(this).addClass('is-selected')
+	$(this).find('p').text('✓')
 	$selectedColor = $(this)
 }
 
@@ -90,3 +95,4 @@ $toggle.on('click', toggleOptions)
 // Fix drag and drop
 // Nicer looking background
 // Changing background for canvas?
+// Number selecting for color, something else for thickness

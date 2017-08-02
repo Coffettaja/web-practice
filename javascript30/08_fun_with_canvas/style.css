@@ -157,7 +157,12 @@ right: 18px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: transparent;
+	color: white;
+
+	text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
 
 	height: 70px;
 	width: 110px;
@@ -225,12 +230,6 @@ right: 18px;
 
 #colors .is-selected {
 	border: 3px solid white;
-	color: white;
-
-	text-shadow: -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000; 
 }
 
 #colors p {
@@ -263,6 +262,11 @@ right: 18px;
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.toggle:focus {
+	outline: 0;
+	color: white;
 }
 
 @media (max-width: 600px) {
