@@ -1,11 +1,12 @@
 html, body {
     margin:0;
 		background-color: hsl(180, 20%, 20%);
+		overflow: hidden
   }
 
 canvas {
 	background-color: hsl(180, 30%, 80%);
-	cursor: url('cursor.png'), auto;
+	cursor: url('cursor.png') 7.7 7.7, auto;
 }
 
 .container {
@@ -184,11 +185,11 @@ right: 18px;
 	margin-right: 0;
 }
 
-.eraser {
+.color-0 {
 	background-color: hsl(180, 30%, 80%);
 }
 
-.color-0 {
+.color-9 {
 	background-color: black;
 }
 
@@ -255,6 +256,8 @@ right: 18px;
 	border-radius: 50%;
 	width: 40px;
 	font-size: 20px;
+	padding-top: 4px;
+	transition: transform 0.2s;
 	-webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -262,6 +265,10 @@ right: 18px;
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.options.hidden .toggle {
+	transform: rotateX(180deg);
 }
 
 .toggle:focus {

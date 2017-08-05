@@ -1,3 +1,5 @@
+'use strict';
+
 const $canvas = $('#draw')
 const container = $('.container')[0]
 const canvas = $('#draw')[0]
@@ -47,18 +49,29 @@ function draw(event) {
 
 // change the drawing color to the color clicked
 function changeColor(e) {
-	if ($selectedColor.is($(this))) {
+	let key
+	let $newColor = $(this)
+	// Keypress
+	if (e.target === $('body')[0]) {
+		key = $('#colors').find(`[data-key='${e.keyCode}']`)[0]
+		$newColor = $(key)
+		if (!key) {
+			return
+		}
+	}
+	// return
+	if ($selectedColor.is($newColor)) {
 		return
 	}
-	const color = $(this).css('background-color')
+	const color = $newColor.css('background-color')
 	context.strokeStyle = color
 	$thickness.css('background-color', color)
 	$selectedColor.removeClass('is-selected')
 	$selectedColor.find('p').text(selectedColorNum)
-	selectedColorNum = $(this).find('p').text()
-	$(this).addClass('is-selected')
-	$(this).find('p').text('✓')
-	$selectedColor = $(this)
+	selectedColorNum = $newColor.find('p').text()
+	$newColor.addClass('is-selected')
+	$newColor.find('p').text('✓')
+	$selectedColor = $newColor
 }
 
 function changeThickness(e) {
@@ -91,8 +104,11 @@ $thickness.on('click', changeThickness)
 
 $toggle.on('click', toggleOptions)
 
+$(window).on('keypress', changeColor)
+
 // TODO
 // Fix drag and drop
 // Nicer looking background
 // Changing background for canvas?
 // Number selecting for color, something else for thickness
+// ctrl + z
