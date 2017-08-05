@@ -52,14 +52,13 @@ function changeColor(e) {
 	let key
 	let $newColor = $(this)
 	// Keypress
-	if (e.target === $('body')[0]) {
+	if (!e.target.hasAttribute("data-key")) {
 		key = $('#colors').find(`[data-key='${e.keyCode}']`)[0]
 		$newColor = $(key)
 		if (!key) {
 			return
 		}
 	}
-	// return
 	if ($selectedColor.is($newColor)) {
 		return
 	}
@@ -110,5 +109,5 @@ $(window).on('keypress', changeColor)
 // Fix drag and drop
 // Nicer looking background
 // Changing background for canvas?
-// Number selecting for color, something else for thickness
+// Selecting thickness with keyboard, toggling options as well
 // ctrl + z
