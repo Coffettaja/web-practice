@@ -95,7 +95,6 @@ canvas {
 	position: relative;
 	height: 40px;
 	width: 40px;
-	/*border: 1px solid red;*/
 }
 
 #thickness .thickness-1:before {
@@ -149,8 +148,8 @@ behind the actual element or it won't work when clicked */
 }
 
 #thickness .thickness-4:after {
-bottom: 58px;
-right: 18px;
+	bottom: 58px;
+	right: 18px;
 }
 
 
@@ -159,6 +158,7 @@ right: 18px;
 	justify-content: center;
 	align-items: center;
 	color: white;
+	font-size: 40px;
 
 	text-shadow: -1px -1px 0 #000,
     1px -1px 0 #000,
@@ -231,18 +231,6 @@ right: 18px;
 
 #colors .is-selected {
 	border: 3px solid white;
-}
-
-#colors p {
-	font-size: 35px;
-
-	-webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
 }
 
 .toggle {

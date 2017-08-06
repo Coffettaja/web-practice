@@ -5,25 +5,29 @@ const container = $('.container')[0]
 const canvas = $('#draw')[0]
 const $options = $('.options')
 const $colors = $('#colors div')
-let $selectedColor = $('.color-1')
-let selectedColorNum = $selectedColor.find('p').text()
-$selectedColor.find('p').text('✓')
-let $selectedThickness = $('.thickness-4')
 const $toggle = $('.toggle')
 const $thickness = $('#thickness div')
+
+let $selectedColor = $('.color-1') // currently selected color
+let selectedColorNum = $selectedColor.text() // The text that should be in the color div
+$selectedColor.text('✓')
+let $selectedThickness = $('.thickness-4')
+const startingColor = $selectedColor.css('background-color') 
+
 const context = canvas.getContext('2d') // context is where all the drawing is done
 
-canvas.width = 2000//$(container).innerWidth()
-canvas.height = 1000 //$(container).innerHeight()
+canvas.width = 2000
+canvas.height = 1000 
 
-const startingColor = $selectedColor.css('background-color') 
+// Setting the options to the initial state
 $selectedColor.toggleClass('is-selected')
 $selectedThickness.toggleClass('is-selected')
-context.strokeStyle = startingColor // starting color
 $thickness.css('background-color', startingColor)
-//context.lineJoin = 'round' // when line meets another line
+
+context.strokeStyle = startingColor
+context.lineJoin = 'round' // when line meets another line
 context.lineCap = 'round' // when line ends 
-context.lineWidth = parseInt($selectedThickness.css('height'))
+context.lineWidth = parseInt($selectedThickness.css('height'), 10)
 
 let isDrawing = false
 let lastX = 0
@@ -47,39 +51,41 @@ function draw(event) {
 	;[lastX, lastY] = [e.offsetX, e.offsetY]
 }
 
-// change the drawing color to the color clicked
+// change the drawing color to the color clicked, or with keypress
 function changeColor(e) {
 	let key
 	let $newColor = $(this)
-	// Keypress
+
+	// Checking for keypress
 	if (!e.target.hasAttribute("data-key")) {
 		key = $('#colors').find(`[data-key='${e.keyCode}']`)[0]
 		$newColor = $(key)
 		if (!key) {
-			return
+			return // Pointless keypress
 		}
 	}
 	if ($selectedColor.is($newColor)) {
-		return
+		return // No need to do anything if the same color is selected again
 	}
 	const color = $newColor.css('background-color')
 	context.strokeStyle = color
 	$thickness.css('background-color', color)
 	$selectedColor.removeClass('is-selected')
-	$selectedColor.find('p').text(selectedColorNum)
-	selectedColorNum = $newColor.find('p').text()
+	$selectedColor.text(selectedColorNum)
+	selectedColorNum = $newColor.text() // Save the number for color
 	$newColor.addClass('is-selected')
-	$newColor.find('p').text('✓')
+	$newColor.text('✓')
 	$selectedColor = $newColor
 }
 
 function changeThickness(e) {
 	if ($selectedThickness.is($(this))) {
-		return
+		return // No need to change thickness if the same selected again
 	}
-	// width and height usually same, but width might change when resizing the window
+
+	// width and height usually same, but width might change when resizing the window?
 	const width = $(this).css('height') 
-	context.lineWidth = parseInt(width)
+	context.lineWidth = parseInt(width, 10)
 	$selectedThickness.removeClass('is-selected')
 	$(this).addClass('is-selected')
 	$selectedThickness = $(this)
