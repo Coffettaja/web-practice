@@ -1,14 +1,22 @@
+const $images = $(".slide-in")
+
 function debounce(func, wait = 20, immediate = true) {
-  var timeout;
+  let timeout
   return function() {
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
+    let context = this, args = arguments
+    let later = function() {
+      timeout = null
+      if (!immediate) func.apply(context, args)
+    }
+    let callNow = immediate && !timeout
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+    if (callNow) func.apply(context, args)
+  }
 }
+
+function checkSlide(e) {
+  console.log(e)
+}
+
+$(window).on('scroll', checkSlide)
