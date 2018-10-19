@@ -1,3 +1,7 @@
+
+// Important to debounce in case of function calls on scroll so the function
+// would not be called hundreds of times.
+
 const $images = $(".slide-in")
 
 function debounce(func, wait = 20, immediate = true) {
@@ -16,7 +20,18 @@ function debounce(func, wait = 20, immediate = true) {
 }
 
 function checkSlide(e) {
-  console.log(e)
+  $images.each((i, elem) => {
+    // SlideInAt is the halfway point of the image
+    const slideInAt = (window.scrollY + window.innerHeight) - elem.height / 2
+    const imageBottom = elem.offsetTop + elem.height // How far the bottom of the image is from the top of the actual window, in pixels
+    const isHalfShown = slideInAt > elem.offsetTop
+    const isNotScrolledPast = window.scrollY < imageBottom
+    if (isHalfShown && isNotScrolledPast) {
+      $(elem).addClass('active')
+    } else {
+      $(elem).removeClass('active')
+    }
+  }) 
 }
 
-$(window).on('scroll', checkSlide)
+$(window).on('scroll', debounce(checkSlide))
