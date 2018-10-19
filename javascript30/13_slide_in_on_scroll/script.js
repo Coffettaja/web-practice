@@ -43,9 +43,8 @@ function checkSlide(e) {
     const slideInAt = (window.scrollY + window.innerHeight) - elem.height / 2
     const imageBottom = elem.offsetTop + elem.height // How far the bottom of the image is from the top of the actual window, in pixels
     const isHalfShown = slideInAt > elem.offsetTop
-    const isScrolledPast = window.scrollY > imageBottom
-    // if (!isScrolledPast) 
-    if (isHalfShown && !isScrolledPast) {
+    
+    if (isHalfShown) {
       $(elem).addClass('active')
     } else {
       $(elem).removeClass('active')
@@ -54,4 +53,4 @@ function checkSlide(e) {
 }
 
 // The tutorial used debounce but it isn't guaranteed that the function will be run, especially when using non-standard scrolling methods, such as middle button of the mouse. This caused weird behavior with the slide in so throttle is used instead.
-$(window).on('scroll', throttle(checkSlide, 50))
+$(window).on('scroll', throttle(checkSlide, 20))
