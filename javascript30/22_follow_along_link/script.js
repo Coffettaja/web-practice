@@ -1,6 +1,7 @@
 'use strict';
 const triggers = document.querySelectorAll('.menu__link')
 const highlight = document.createElement('span')
+
 highlight.classList.add('highlight')
 document.body.append(highlight)
 
