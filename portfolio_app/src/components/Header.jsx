@@ -5,8 +5,8 @@ const Header = () => (
   <header>
     <h1>Portfolio</h1>
     <NavLink to="/" activeClassName="is-active" exact>Home</NavLink>
-    <NavLink to="" activeClassName="is-active">Portfolio</NavLink>
-    <NavLink to="" activeClassName="is-active">Contact</NavLink>
+    <NavLink to="/portfolio" activeClassName="is-active">Portfolio</NavLink>
+    <NavLink to="/contact" activeClassName="is-active">Contact</NavLink>
   </header>
 )
 
